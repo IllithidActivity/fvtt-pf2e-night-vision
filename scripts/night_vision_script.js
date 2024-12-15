@@ -5,7 +5,7 @@ Hooks.once("init", () => {
 
 Hooks.on('init', () => {
 
-	game.settings.register("wfrp4e-night-vision", "onlyOnSelection", {
+	game.settings.register("pf2e-night-vision", "onlyOnSelection", {
 		name: "Night Vision requires selection",
 		hint: "With this setting on, players must select a token to see with Night Vision",
 		scope: "world",
@@ -21,7 +21,7 @@ Hooks.on('init', () => {
 		},
 	});
 
-	game.settings.register("wfrp4e-night-vision", "nightVisionDistance", {
+	game.settings.register("pf2e-night-vision", "nightVisionDistance", {
 		name: "Night Vision range",
 		hint: "Modifies the distance granted per rank in Night Vision. Default is 20",
 		scope: "world",
@@ -38,7 +38,7 @@ Hooks.on('init', () => {
 		},
 	});
 
-	game.settings.register("wfrp4e-night-vision", "nightVisionBright", {
+	game.settings.register("pf2e-night-vision", "nightVisionBright", {
 		name: "Night Vision affects bright illumination",
 		hint: "With this setting on, Night Vision also increases the radius of bright illumination by half the value of dim illumination",
 		scope: "world",
@@ -69,7 +69,7 @@ const mixin = Base => class extends Base {
 
 		data.dim += multiplier.dim * nightVisionDistance * distancePix;
 
-		if (game.settings.get("wfrp4e-night-vision", "nightVisionBright")) {
+		if (game.settings.get("pf2e-night-vision", "nightVisionBright")) {
 			data.bright += multiplier.bright * nightVisionDistance / 2 * distancePix;
 		}
 		return data;
@@ -78,7 +78,7 @@ const mixin = Base => class extends Base {
 
 const visionCalculator = function () {
 	multiplier = { dim: 0, bright: 0 }; //reset multiplier to 0 (erases previous values)
-	const gmSelection = game.user.isGM || game.settings.get("wfrp4e-night-vision", "onlyOnSelection");
+	const gmSelection = game.user.isGM || game.settings.get("pf2e-night-vision", "onlyOnSelection");
 	const controlledtoken = canvas.tokens.controlled;
 	let relevantTokens; // define which tokens with which to calculate Night Vision settings.
 
@@ -120,7 +120,7 @@ const visionCalculator = function () {
 
 	// Define the values for nightvision distance
 	distancePix = game.scenes.viewed.dimensions.distancePixels; // find the pixels per grid unit (assume it's yards)
-	nightVisionDistance = game.settings.get("wfrp4e-night-vision", "nightVisionDistance");
+	nightVisionDistance = game.settings.get("pf2e-night-vision", "nightVisionDistance");
 
 	//console.log("LOOK HERE", multiplier, result);
 
